@@ -137,3 +137,13 @@ diffSelect i m g = leftMap (k :) $ diffSelect (i - 1) m g'
 
 rndPermu :: RandomGen g => [a] -> g -> ([a], g)
 rndPermu xs = rndSelect xs (length xs)
+
+combinations :: Int -> [a] -> [[a]]
+combinations 0 xs = [[]]
+combinations _ [] = []
+combinations _ [x] = [[x]]
+combinations i xs = concatMap (combine . (`removeAt` xs)) indexes
+  where
+    indexes = [1 .. length xs]
+    combine :: (a, [a]) -> [[a]]
+    combine (r, s) = map ((:) r) $ combinations (i - 1) s
