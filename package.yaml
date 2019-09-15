@@ -21,10 +21,12 @@ description: Please see the README on GitHub at <https://github.com/githubuser/h
 
 dependencies:
   - base >= 4.7 && < 5
-  - linear
 
 library:
   source-dirs: src
+  dependencies:
+    - foldl
+    - random
 
 executables:
   haskell-sandbox-exe:
@@ -47,4 +49,5 @@ tests:
       - -with-rtsopts=-N
     dependencies:
       - haskell-sandbox
-      - QuickCheck
+      - hspec
+      - random
