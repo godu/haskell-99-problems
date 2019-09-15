@@ -118,6 +118,9 @@ range l r
   | l == r = [l]
   | otherwise = l : range (l + 1) r
 
+leftMap :: (a -> c) -> (a, b) -> (c, b)
+leftMap f = swap . fmap f . swap
+
 rndSelect :: RandomGen g => [a] -> Int -> g -> ([a], g)
 rndSelect _ 0 g = ([], g)
 rndSelect [] _ g = ([], g)
@@ -125,4 +128,9 @@ rndSelect xs i g = leftMap (p :) $ rndSelect xs' (i - 1) g'
   where
     (k, g') = randomR (0, length xs - 1) g
     (p, xs') = removeAt (k + 1) xs
-    leftMap f = swap . fmap f . swap
+
+diffSelect :: RandomGen g => Int -> Int -> g -> ([Int], g)
+diffSelect 0 _ g = ([], g)
+diffSelect i m g = leftMap (k :) $ diffSelect (i - 1) m g'
+  where
+    (k, g') = randomR (1, m) g

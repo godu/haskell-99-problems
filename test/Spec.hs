@@ -3,6 +3,7 @@ import NinetyNineProblems
   , NestedList(Elem, List)
   , compress
   , decodeModified
+  , diffSelect
   , dropEvery
   , dupli
   , elementAt
@@ -107,3 +108,6 @@ main =
     it "Problem 22" $ range 4 9 `shouldBe` [4, 5, 6, 7, 8, 9]
     it "Problem 23" $
       fst (rndSelect "abcdefgh" 3 (mkStdGen 1676486720)) `shouldBe` "cad"
+    it "Problem 24" $
+      fst (diffSelect 6 49 (mkStdGen 1676486720)) `shouldBe`
+      [3, 36, 42, 46, 43, 23]
