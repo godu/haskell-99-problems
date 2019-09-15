@@ -1,3 +1,3 @@
-# Changelog for haskell-sandbox
+# Changelog for haskell-99problems
 
 ## Unreleased changes
