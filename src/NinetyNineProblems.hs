@@ -134,3 +134,6 @@ diffSelect 0 _ g = ([], g)
 diffSelect i m g = leftMap (k :) $ diffSelect (i - 1) m g'
   where
     (k, g') = randomR (1, m) g
+
+rndPermu :: RandomGen g => [a] -> g -> ([a], g)
+rndPermu xs = rndSelect xs (length xs)

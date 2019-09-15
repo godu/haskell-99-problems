@@ -21,6 +21,7 @@ import NinetyNineProblems
   , range
   , removeAt
   , repli
+  , rndPermu
   , rndSelect
   , rotate
   , slice
@@ -111,3 +112,5 @@ main =
     it "Problem 24" $
       fst (diffSelect 6 49 (mkStdGen 1676486720)) `shouldBe`
       [3, 36, 42, 46, 43, 23]
+    it "Problem 25" $
+      fst (rndPermu "abcdef" (mkStdGen 1676486720)) `shouldBe` "edbfac"
