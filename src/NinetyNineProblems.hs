@@ -147,3 +147,23 @@ combinations i xs = concatMap (combine . (`removeAt` xs)) indexes
     indexes = [1 .. length xs]
     combine :: (a, [a]) -> [[a]]
     combine (r, s) = map ((:) r) $ combinations (i - 1) s
+
+-- groupTogether :: [Int] -> [a] -> [[[a]]]
+-- groupTogether gs xs = [combinations (sum gs) xs]
+--   where
+--     groupTogether' [] _ = []
+--     groupTogether' (g:gs) xs =
+--       let (l, r) = split xs g
+--        in [l] -- groupTogether' gs r
+combination :: Int -> [a] -> [([a], [a])]
+combination 0 xs = [([], xs)]
+combination n [] = []
+combination n (x:xs) = ts ++ ds
+  where
+    ts = [(x : ys, zs) | (ys, zs) <- combination (n - 1) xs]
+    ds = [(ys, x : zs) | (ys, zs) <- combination n xs]
+
+groupTogether :: [Int] -> [a] -> [[[a]]]
+groupTogether [] _ = [[]]
+groupTogether (n:ns) xs =
+  [g : gs | (g, rs) <- combination n xs, gs <- groupTogether ns rs]
