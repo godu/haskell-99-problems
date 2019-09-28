@@ -1,6 +1,6 @@
-name: haskell-99problems
+name: haskell-sandbox
 version: 0.1.0.0
-github: "godu/haskell-99problems"
+github: "godu/haskell-sandbox"
 license: BSD3
 author: "Arthur Weber"
 maintainer: "arthur.weber@viacesi.fr"
@@ -16,7 +16,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description: Please see the README on GitHub at <https://github.com/godu/haskell-99problems#readme>
+description: Please see the README on GitHub at <https://github.com/godu/haskell-sandbox#readme>
 
 dependencies:
   - base >= 4.7 && < 5
@@ -28,7 +28,7 @@ library:
     - random
 
 executables:
-  haskell-99problems-exe:
+  haskell-sandbox-exe:
     main: Main.hs
     source-dirs: app
     ghc-options:
@@ -36,10 +36,10 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - haskell-99problems
+      - haskell-sandbox
 
 tests:
-  haskell-99problems-test:
+  haskell-sandbox-test:
     main: Spec.hs
     source-dirs: test
     ghc-options:
@@ -47,6 +47,6 @@ tests:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - haskell-99problems
+      - haskell-sandbox
       - hspec
       - random
