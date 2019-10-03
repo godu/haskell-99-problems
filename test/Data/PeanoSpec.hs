@@ -54,6 +54,9 @@ spec = do
     (0 :: Peano) `shouldBe` Zero
     evaluate (fromInteger (-2) :: Peano) `shouldThrow`
       errorCall "fromInteger < 0"
+  it "Bounded" $ do
+    minBound <= Zero `shouldBe` True
+    maxBound > Succ (Succ (Succ (Succ (Succ (Succ Zero))))) `shouldBe` True
   it "Ix" $ do
     range (Zero, Succ (Succ Zero)) `shouldBe`
       [Zero, Succ Zero, Succ (Succ Zero)]
@@ -71,3 +74,12 @@ spec = do
     quotRem (Succ Zero) (Succ (Succ Zero)) `shouldBe` (Zero, Succ Zero)
     quotRem (Succ (Succ Zero)) (Succ Zero) `shouldBe` (Succ (Succ Zero), Zero)
     evaluate (quotRem Zero Zero) `shouldThrow` errorCall "0/0"
+  it "Semigroup" $ do
+    Succ Zero <> Succ (Succ Zero) `shouldBe` Succ (Succ (Succ Zero))
+    Succ (Succ Zero) <> Succ Zero `shouldBe` Succ (Succ (Succ Zero))
+  it "Monoid" $ do
+    mconcat [Succ Zero, Zero, Succ (Succ Zero)] `shouldBe`
+      Succ (Succ (Succ Zero))
+    mconcat [Succ (Succ Zero), Zero, Succ Zero] `shouldBe`
+      Succ (Succ (Succ Zero))
+    mconcat [] `shouldBe` Zero

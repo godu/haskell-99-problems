@@ -79,3 +79,9 @@ instance Integral Peano where
       _ ->
         let (q, r) = quotRem (a - b) b
          in (Succ q, r)
+
+instance Semigroup Peano where
+  (<>) = (+)
+
+instance Monoid Peano where
+  mempty = Zero
