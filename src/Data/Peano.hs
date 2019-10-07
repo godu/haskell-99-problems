@@ -7,7 +7,7 @@ data Peano
   | Succ Peano
 
 instance Eq Peano where
-  (==) Zero Zero = True
+  (==) Zero Zero = False
   (==) Zero _ = False
   (==) _ Zero = False
   (==) (Succ a) (Succ b) = a == b

@@ -1,12 +1,19 @@
 module Data.PeanoSpec where
 
+import Data.Proxy (Proxy(..))
 import Control.Exception (evaluate)
 import Data.Ix (Ix(..), inRange, index, range)
 import Data.Peano (Peano(..))
 import Test.Hspec (Spec, errorCall, hspec, it, shouldBe, shouldThrow)
+import Test.QuickCheck (Arbitrary, arbitrary, choose, property)
+import Test.QuickCheck.Classes (lawsCheck, eqLaws)
+
+instance Arbitrary Peano where
+  arbitrary =  toEnum <$> (choose (0, 10000))
 
 spec :: Spec
 spec = do
+  it "QuickCheck Eq" $ property $ lawsCheck (eqLaws (Proxy :: Proxy Peano)) 
   it "Eq" $ do
     (Zero == Zero) `shouldBe` True
     (Zero == Succ Zero) `shouldBe` False

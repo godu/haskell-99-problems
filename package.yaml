@@ -49,4 +49,6 @@ tests:
     dependencies:
       - haskell-sandbox
       - hspec
+      - QuickCheck
+      - quickcheck-classes
       - random
