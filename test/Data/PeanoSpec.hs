@@ -1,85 +1,121 @@
 module Data.PeanoSpec where
 
-import Control.Exception (evaluate)
-import Data.Ix (Ix(..), inRange, index, range)
-import Data.Peano (Peano(..))
-import Test.Hspec (Spec, errorCall, hspec, it, shouldBe, shouldThrow)
+import Data.Peano (Peano(..), fromInt)
+import Data.Semiring (Semiring, (*), (+), one, zero)
+import Prelude
+  ( Bool(..)
+  , Eq
+  , Int(..)
+  , Ordering(..)
+  , ($)
+  , (&&)
+  , (.)
+  , (/=)
+  , (<)
+  , (<$>)
+  , (<=)
+  , (<>)
+  , (==)
+  , (>)
+  , (||)
+  , abs
+  , compare
+  , const
+  , id
+  , otherwise
+  , read
+  , show
+  )
+import Test.Hspec (Spec, describe, it, shouldBe)
+import Test.QuickCheck (property)
+import Test.QuickCheck.Arbitrary (Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (choose)
+
+instance Arbitrary Peano where
+  arbitrary = fromInt <$> choose (0, 20)
+
+eqTransitive a b c
+  | a == b =
+    if b == c
+      then a == c
+      else a /= c
+  | b == c = a /= c
+  | otherwise = True
+
+eqSymmetric a b =
+  if a == b
+    then b == a
+    else b /= a
+
+eqReflexive a = a == a
+
+ordAntisymmetric a b = ((a <= b) && (b <= a)) == (a == b)
+
+ordTransitive a b c =
+  case (compare a b, compare b c) of
+    (LT, LT) -> a < c
+    (LT, EQ) -> a < c
+    (LT, GT) -> True
+    (EQ, LT) -> a < c
+    (EQ, EQ) -> a == c
+    (EQ, GT) -> a > c
+    (GT, LT) -> True
+    (GT, EQ) -> a > c
+    (GT, GT) -> a > c
+
+ordTotal a b = (a <= b) || (b <= a)
+
+semiringCommutativePlus a b = a + b == b + a
+
+semiringLeftIdentityPlus a = zero + a == a
+
+semiringRightIdentityPlus a = a + zero == a
+
+semiringAssociativeTimes a b c = (a * b) * c == a * (b * c)
+
+semiringLeftIdentityTimes a = one * a == a
+
+semiringRightIdentityTimes a = a * one == a
+
+semiringLeftMultiplicationDistributes a b c = a * (b + c) == (a * b) + (a * c)
+
+semiringRightMultiplicationDistributes a b c = (a + b) * c == (a * c) + (b * c)
+
+semiringLeftAnnihilation a = zero * a == zero
+
+semiringRightAnnihilation a = a * zero == zero
 
 spec :: Spec
 spec = do
-  it "Eq" $ do
-    (Zero == Zero) `shouldBe` True
-    (Zero == Succ Zero) `shouldBe` False
-    (Succ Zero == Zero) `shouldBe` False
-    (Succ Zero == Succ Zero) `shouldBe` True
-    (Succ Zero == Succ (Succ Zero)) `shouldBe` False
-    (Succ (Succ Zero) == Succ Zero) `shouldBe` False
-  it "Enum" $ do
-    toEnum 0 `shouldBe` Zero
-    toEnum 1 `shouldBe` Succ Zero
-    evaluate (toEnum (-1) :: Peano) `shouldThrow` errorCall "toEnum -1"
-    fromEnum Zero `shouldBe` 0
-    fromEnum (Succ Zero) `shouldBe` 1
-    succ Zero `shouldBe` Succ Zero
-    succ (Succ Zero) `shouldBe` Succ (Succ Zero)
-    pred (Succ Zero) `shouldBe` Zero
-    evaluate (pred Zero) `shouldThrow` errorCall "pred Zero"
-  it "Show" $ do
-    show Zero `shouldBe` "0"
-    show (Succ Zero) `shouldBe` "1"
-  it "Ord" $ do
-    Zero <= Zero `shouldBe` True
-    (Zero <= Succ Zero) `shouldBe` True
-    (Succ Zero <= Zero) `shouldBe` False
-    (Succ Zero <= Succ Zero) `shouldBe` True
-  it "Read" $ do
-    read "0" `shouldBe` Zero
-    read "1" `shouldBe` Succ Zero
-    evaluate (read "-1" :: Peano) `shouldThrow` errorCall "toEnum -1"
-    evaluate (read "a" :: Peano) `shouldThrow`
-      errorCall "Prelude.read: no parse"
-  it "Num" $ do
-    Succ (Succ Zero) + Succ Zero `shouldBe` Succ (Succ (Succ Zero))
-    Succ Zero + Succ (Succ Zero) `shouldBe` Succ (Succ (Succ Zero))
-    Succ (Succ Zero) - Succ Zero `shouldBe` Succ Zero
-    evaluate (Zero - Succ Zero) `shouldThrow` errorCall "minus < 0"
-    Succ Zero * Zero `shouldBe` Zero
-    Zero * Succ Zero `shouldBe` Zero
-    Succ (Succ Zero) *
-      Succ (Succ Zero) `shouldBe` Succ (Succ (Succ (Succ Zero)))
-    abs (Succ Zero) `shouldBe` Succ Zero
-    signum Zero `shouldBe` Zero
-    signum (Succ (Succ Zero)) `shouldBe` Succ Zero
-    (2 :: Peano) `shouldBe` Succ (Succ Zero)
-    (0 :: Peano) `shouldBe` Zero
-    evaluate (fromInteger (-2) :: Peano) `shouldThrow`
-      errorCall "fromInteger < 0"
-  it "Bounded" $ do
-    minBound <= Zero `shouldBe` True
-    maxBound > Succ (Succ (Succ (Succ (Succ (Succ Zero))))) `shouldBe` True
-  it "Ix" $ do
-    range (Zero, Succ (Succ Zero)) `shouldBe`
-      [Zero, Succ Zero, Succ (Succ Zero)]
-    range (Zero, Zero) `shouldBe` [Zero]
-    range (Succ Zero, Zero) `shouldBe` []
-    index (Zero, Succ (Succ Zero)) (Succ Zero) `shouldBe` 1
-    inRange (Zero, Succ (Succ Zero)) (Succ Zero) `shouldBe` True
-    inRange (Zero, Succ Zero) (Succ (Succ Zero)) `shouldBe` False
-  it "Real" $ do
-    toRational Zero `shouldBe` 0
-    toRational (Succ Zero) `shouldBe` 1
-  it "Integral" $ do
-    toInteger Zero `shouldBe` 0
-    toInteger (Succ Zero) `shouldBe` 1
-    quotRem (Succ Zero) (Succ (Succ Zero)) `shouldBe` (Zero, Succ Zero)
-    quotRem (Succ (Succ Zero)) (Succ Zero) `shouldBe` (Succ (Succ Zero), Zero)
-    evaluate (quotRem Zero Zero) `shouldThrow` errorCall "0/0"
-  it "Semigroup" $ do
-    Succ Zero <> Succ (Succ Zero) `shouldBe` Succ (Succ (Succ Zero))
-    Succ (Succ Zero) <> Succ Zero `shouldBe` Succ (Succ (Succ Zero))
-  it "Monoid" $ do
-    mconcat [Succ Zero, Zero, Succ (Succ Zero)] `shouldBe`
-      Succ (Succ (Succ Zero))
-    mconcat [Succ (Succ Zero), Zero, Succ Zero] `shouldBe`
-      Succ (Succ (Succ Zero))
-    mconcat [] `shouldBe` Zero
+  describe "Eq" $ do
+    it "Transitive" $ property (eqTransitive :: Peano -> Peano -> Peano -> Bool)
+    it "Symmetric" $ property (eqSymmetric :: Peano -> Peano -> Bool)
+    it "Reflexive" $ property (eqReflexive :: Peano -> Bool)
+  describe "Ord" $ do
+    it "Antisymmetry" $ property (ordAntisymmetric :: Peano -> Peano -> Bool)
+    it "Transitivity" $
+      property (ordTransitive :: Peano -> Peano -> Peano -> Bool)
+    it "Totality" $ property (ordTotal :: Peano -> Peano -> Bool)
+  describe "Semiring" $ do
+    it "Additive Commutativity" $
+      property (semiringCommutativePlus :: Peano -> Peano -> Bool)
+    it "Additive Left Identity" $
+      property (semiringLeftIdentityPlus :: Peano -> Bool)
+    it "Additive Right Identity" $
+      property (semiringRightIdentityPlus :: Peano -> Bool)
+    it "Multiplicative Associativity" $
+      property (semiringAssociativeTimes :: Peano -> Peano -> Peano -> Bool)
+    it "Multiplicative Left Identity" $
+      property (semiringLeftIdentityTimes :: Peano -> Bool)
+    it "Multiplicative Right Identity" $
+      property (semiringRightIdentityTimes :: Peano -> Bool)
+    it "Multiplication Left Distributes Over Addition" $
+      property
+        (semiringLeftMultiplicationDistributes :: Peano -> Peano -> Peano -> Bool)
+    it "Multiplication Right Distributes Over Addition" $
+      property
+        (semiringRightMultiplicationDistributes :: Peano -> Peano -> Peano -> Bool)
+    it "Multiplicative Left Annihilation" $
+      property (semiringLeftAnnihilation :: Peano -> Bool)
+    it "Multiplicative Right Annihilation" $
+      property (semiringRightAnnihilation :: Peano -> Bool)

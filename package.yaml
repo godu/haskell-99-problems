@@ -26,6 +26,7 @@ library:
   dependencies:
     - foldl
     - random
+    - semirings
 
 executables:
   haskell-sandbox-exe:
@@ -49,4 +50,7 @@ tests:
     dependencies:
       - haskell-sandbox
       - hspec
+      - QuickCheck
+      - quickcheck-classes
       - random
+      - semirings

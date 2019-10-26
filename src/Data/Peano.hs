@@ -1,87 +1,55 @@
 module Data.Peano where
 
-import Data.Ix (Ix(..))
+import Data.Semiring (Semiring(..), (*), (+), one, zero)
+import Prelude
+  ( Bool(..)
+  , Bounded
+  , Eq
+  , Int
+  , Monoid
+  , Ord
+  , Semigroup
+  , Show
+  , ($)
+  , (-)
+  , (.)
+  , (<=)
+  , (==)
+  , (>)
+  , show
+  )
 
 data Peano
   = Zero
   | Succ Peano
 
 instance Eq Peano where
-  (==) Zero Zero = True
-  (==) Zero _ = False
-  (==) _ Zero = False
-  (==) (Succ a) (Succ b) = a == b
+  Zero == Zero = True
+  Zero == _ = False
+  _ == Zero = False
+  (Succ a) == (Succ b) = a == b
 
-instance Enum Peano where
-  fromEnum Zero = 0
-  fromEnum (Succ x) = 1 + fromEnum x
-  toEnum 0 = Zero
-  toEnum x
-    | x > 0 = Succ (toEnum (x - 1))
-    | otherwise = error ("toEnum " <> show x)
-  succ = Succ
-  pred Zero = error "pred Zero"
-  pred (Succ a) = a
+instance Semiring Peano where
+  a `plus` Zero = a
+  a `plus` Succ b = Succ $ a + b
+  zero = Zero
+  _ `times` Zero = Zero
+  a `times` (Succ b) = a + (a * b)
+  one = Succ Zero
+
+toInt :: Peano -> Int
+toInt Zero = 0
+toInt (Succ a) = 1 + toInt a
+
+fromInt :: Int -> Peano
+fromInt 0 = Zero
+fromInt a = Succ (fromInt (a - 1))
 
 instance Show Peano where
-  show = show . fromEnum
+  show = show . toInt
 
 instance Ord Peano where
-  (<=) Zero Zero = True
-  (<=) Zero _ = True
-  (<=) _ Zero = False
-  (<=) (Succ a) (Succ b) = a <= b
-
-instance Read Peano where
-  readsPrec d = map (\(a, b) -> (toEnum a, b)) . readsPrec d
-
-instance Num Peano where
-  a + Zero = a
-  a + Succ b = succ (a + b)
-  Zero - Zero = Zero
-  Zero - _ = error "minus < 0"
-  a - Zero = a
-  Succ a - Succ b = a - b
-  Zero * _ = Zero
-  _ * Zero = Zero
-  a * Succ Zero = a
-  a * Succ b = a + a * b
-  abs = id
-  signum Zero = Zero
-  signum _ = Succ Zero
-  fromInteger a
-    | a == 0 = Zero
-    | a > 0 = Succ (fromInteger (a - 1))
-    | a < 0 = error "fromInteger < 0"
-
-infinity :: Peano
-infinity = Succ infinity
-
-instance Bounded Peano where
-  minBound = Zero
-  maxBound = infinity
-
-instance Ix Peano where
-  range (a, b) = enumFromTo a b
-  index (a, _) b = fromEnum (b - a)
-  inRange (a, b) c = a <= c && b >= c
-
-instance Real Peano where
-  toRational = toRational . toInteger
-
-instance Integral Peano where
-  toInteger Zero = 0
-  toInteger (Succ a) = toInteger a + 1
-  quotRem Zero Zero = error "0/0"
-  quotRem a b =
-    case compare a b of
-      LT -> (Zero, a)
-      _ ->
-        let (q, r) = quotRem (a - b) b
-         in (Succ q, r)
-
-instance Semigroup Peano where
-  (<>) = (+)
-
-instance Monoid Peano where
-  mempty = Zero
+  Zero <= Zero = True
+  Zero <= _ = True
+  _ <= Zero = False
+  (Succ a) <= (Succ b) = a <= b
