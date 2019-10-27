@@ -1,4 +1,4 @@
-module Data.Peano where
+module Data.Natural where
 
 import Data.Semiring (Semiring(..), (*), (+), one, zero)
 import Prelude
@@ -19,17 +19,17 @@ import Prelude
   , show
   )
 
-data Peano
+data Natural
   = Zero
-  | Succ Peano
+  | Succ Natural
 
-instance Eq Peano where
+instance Eq Natural where
   Zero == Zero = True
   Zero == _ = False
   _ == Zero = False
   (Succ a) == (Succ b) = a == b
 
-instance Semiring Peano where
+instance Semiring Natural where
   a `plus` Zero = a
   a `plus` Succ b = Succ $ a + b
   zero = Zero
@@ -37,18 +37,18 @@ instance Semiring Peano where
   a `times` (Succ b) = a + (a * b)
   one = Succ Zero
 
-toInt :: Peano -> Int
+toInt :: Natural -> Int
 toInt Zero = 0
 toInt (Succ a) = 1 + toInt a
 
-fromInt :: Int -> Peano
+fromInt :: Int -> Natural
 fromInt 0 = Zero
 fromInt a = Succ (fromInt (a - 1))
 
-instance Show Peano where
+instance Show Natural where
   show = show . toInt
 
-instance Ord Peano where
+instance Ord Natural where
   Zero <= Zero = True
   Zero <= _ = True
   _ <= Zero = False
