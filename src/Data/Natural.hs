@@ -1,44 +1,48 @@
 module Data.Natural where
 
-import Data.Semiring (Semiring(..), (*), (+), one, zero)
-import Prelude
-  ( Bool(..)
-  , Bounded
-  , Eq
-  , Int
-  , Monoid
-  , Ord
-  , Semigroup
-  , Show
-  , ($)
-  , (-)
-  , (.)
-  , (<=)
-  , (==)
-  , (>)
-  , show
-  )
+import           Data.Semiring                  ( Semiring(..)
+                                                , (*)
+                                                , (+)
+                                                , one
+                                                , zero
+                                                )
+import           Prelude                        ( Bool(..)
+                                                , Bounded
+                                                , Eq
+                                                , Int
+                                                , Monoid
+                                                , Ord
+                                                , Semigroup
+                                                , Show
+                                                , ($)
+                                                , (-)
+                                                , (.)
+                                                , (<=)
+                                                , (==)
+                                                , (>)
+                                                , show
+                                                )
 
 data Natural
   = Zero
   | Succ Natural
 
 instance Eq Natural where
-  Zero == Zero = True
-  Zero == _ = False
-  _ == Zero = False
+  Zero     == Zero     = True
+  Zero     == _        = False
+  _        == Zero     = False
   (Succ a) == (Succ b) = a == b
 
 instance Semiring Natural where
-  a `plus` Zero = a
+  a `plus` Zero   = a
   a `plus` Succ b = Succ $ a + b
   zero = Zero
-  _ `times` Zero = Zero
+  _ `times` Zero     = Zero
   a `times` (Succ b) = a + (a * b)
   one = Succ Zero
 
 toInt :: Natural -> Int
-toInt Zero = 0
+toInt Zero     = 0
 toInt (Succ a) = 1 + toInt a
 
 fromInt :: Int -> Natural
@@ -49,7 +53,7 @@ instance Show Natural where
   show = show . toInt
 
 instance Ord Natural where
-  Zero <= Zero = True
-  Zero <= _ = True
-  _ <= Zero = False
+  Zero     <= Zero     = True
+  Zero     <= _        = True
+  _        <= Zero     = False
   (Succ a) <= (Succ b) = a <= b
