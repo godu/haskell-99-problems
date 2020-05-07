@@ -1,8 +1,8 @@
 cradle:
   stack:
-    - path: ./app
-      component: "haskell-sandbox:exe:haskell-sandbox-exe"
-    - path: ./src
-      component: "haskell-sandbox:lib"
-    - path: ./test
+    - path: test
       component: "haskell-sandbox:test:haskell-sandbox-test"
+    - path: src
+      component: "haskell-sandbox:lib"
+    - path: app
+      component: "haskell-sandbox:exe:haskell-sandbox-exe"
