@@ -6,21 +6,18 @@ import           Data.Semiring                  ( Semiring(..)
                                                 , one
                                                 , zero
                                                 )
-import           Prelude                        ( Bool(..)
+import           Prelude                        ( Eq
+                                                , Bool(..)
                                                 , Bounded
-                                                , Eq
                                                 , Int
                                                 , Monoid
-                                                , Ord
+                                                , Ord(..)
                                                 , Semigroup
-                                                , Show
+                                                , Show(..)
                                                 , ($)
-                                                , (-)
                                                 , (.)
-                                                , (<=)
+                                                , (-)
                                                 , (==)
-                                                , (>)
-                                                , show
                                                 )
 
 data Natural

@@ -3,6 +3,42 @@ module Solver where
 import           Prelude
 import           Data.SBV
 
+-- https://rise4fun.com/z3/tutorial
+
+-- Propositional Logic
+
+propositionalLogic :: Goal
+propositionalLogic = do
+  p <- sBool "p"
+  q <- sBool "q"
+  r <- sBool "r"
+
+  let conjecture = ((p .=> q) .&& (q .=> r)) .=> (p .=> r)
+  constrain $ sNot conjecture
+
+-- Satisfiability and Validity
+
+satisfiabilityAndValidity :: Goal
+satisfiabilityAndValidity = do
+  a <- sBool "a"
+  b <- sBool "b"
+
+  let demorgan = (a .&& b) .== (sNot ((sNot a) .|| (sNot b)))
+  constrain $ sNot demorgan
+
+-- Uninterpreted functions and constants
+
+uninterpretedFunctionsAndConstants :: Goal
+uninterpretedFunctionsAndConstants = do
+  let f :: SInteger -> SInteger
+      f = uninterpret "f"
+  a <- sInteger "a"
+  b <- sInteger "b"
+
+  constrain $ (a .> 20)
+  constrain $ (b .> a)
+  constrain $ (f 10) .== 1
+
 -- | Taken from <http://people.brunel.ac.uk/~mastjjb/jeb/or/morelp.html>
 --
 -- A company makes two products (X and Y) using two machines (A and B).
@@ -37,39 +73,30 @@ import           Data.SBV
 
 production :: Goal
 production = do
-    x <- sInteger "X" -- Units of X produced
-    y <- sInteger "Y" -- Units of Y produced
+  x <- sInteger "X" -- Units of X produced
+  y <- sInteger "Y" -- Units of Y produced
 
-    -- Amount of time on machine A and B
-    let timeA = 50 * x + 24 * y
-        timeB = 30 * x + 33 * y
+  -- Amount of time on machine A and B
+  let timeA = 50 * x + 24 * y
+      timeB = 30 * x + 33 * y
 
-    constrain $ timeA .<= 40 * 60
-    constrain $ timeB .<= 35 * 60
+  constrain $ timeA .<= 40 * 60
+  constrain $ timeB .<= 35 * 60
 
-    -- Amount of product we'll end up with
-    let finalX = x + 30
-        finalY = y + 90
+  -- Amount of product we'll end up with
+  let finalX = x + 30
+      finalY = y + 90
 
-    -- Make sure the demands are met:
-    constrain $ finalX .>= 75
-    constrain $ finalY .>= 95
+  -- Make sure the demands are met:
+  constrain $ finalX .>= 75
+  constrain $ finalY .>= 95
 
-    -- Policy: Maximize the final stock
-    maximize "stock" $ (finalX - 75) + (finalY - 95)
+  -- Policy: Maximize the final stock
+  maximize "stock" $ (finalX - 75) + (finalY - 95)
 
-runProduction :: Goal -> IO (Maybe (Integer, Integer))
-runProduction goal = extract <$> optimize Lexicographic goal
-  where
-    extract (LexicographicResult result) =
-        case
-                ( getModelValue "X" result :: Maybe Integer
-                , getModelValue "Y" result :: Maybe Integer
-                )
-            of
-                (Just x, Just y) -> Just (x, y)
-                _                -> Nothing
-    extract _ = Nothing
+toResult :: OptimizeResult -> Maybe SMTResult
+toResult (LexicographicResult result) = Just result
+toResult _                            = Nothing
 
 -- | Taken from <http://people.brunel.ac.uk/~mastjjb/jeb/or/morelp.html>
 --
@@ -90,25 +117,12 @@ runProduction goal = extract <$> optimize Lexicographic goal
 
 linearOpt :: Goal
 linearOpt = do
-    [x1, x2] <- mapM sReal ["x1", "x2"]
+  [x1, x2] <- mapM sReal ["x1", "x2"]
 
-    constrain $ x1 + x2 .<= 10
-    constrain $ x1 - x2 .>= 3
-    constrain $ 5 * x1 + 4 * x2 .<= 35
-    constrain $ x1 .>= 0
-    constrain $ x2 .>= 0
+  constrain $ x1 + x2 .<= 10
+  constrain $ x1 - x2 .>= 3
+  constrain $ 5 * x1 + 4 * x2 .<= 35
+  constrain $ x1 .>= 0
+  constrain $ x2 .>= 0
 
-    maximize "goal" $ 5 * x1 + 6 * x2
-
-runLinearOpt :: Goal -> IO (Maybe (AlgReal, AlgReal))
-runLinearOpt goal = extract <$> optimize Lexicographic goal
-  where
-    extract (LexicographicResult result) =
-        case
-                ( getModelValue "x1" result :: Maybe AlgReal
-                , getModelValue "x2" result :: Maybe AlgReal
-                )
-            of
-                (Just x, Just y) -> Just (x, y)
-                _                -> Nothing
-    extract _ = Nothing
+  maximize "goal" $ 5 * x1 + 6 * x2
