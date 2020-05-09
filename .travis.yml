@@ -11,9 +11,9 @@ addons:
 
 before_install:
   # Install z3-4.8
-  - wget -O ~/z3-4.8.7-x64-ubuntu-16.04.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.7/z3-4.8.7-x64-ubuntu-16.04.zip
-  - unzip ~/z3-4.8.7-x64-ubuntu-16.04.zip -d ~/
-  - export PATH=$HOME/z3-4.8.7-x64-ubuntu-16.04/bin:$PATH
+  - wget -O ~/z3-4.8.8-x64-ubuntu-16.04.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.8/z3-4.8.8-x64-ubuntu-16.04.zip
+  - unzip ~/z3-4.8.8-x64-ubuntu-16.04.zip -d ~/
+  - export PATH=$HOME/z3-4.8.8-x64-ubuntu-16.04/bin:$PATH
 
   # Download and unpack the stack executable
   - mkdir -p ~/.local/bin
