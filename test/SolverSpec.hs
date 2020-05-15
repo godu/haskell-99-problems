@@ -11,15 +11,15 @@ z3Debug = z3 { verbose = True }
 spec :: Spec
 spec = do
     it "Propositional Logic" $ do
-        actual <- satWith z3Debug propositionalLogic
+        actual <- sat propositionalLogic
         (show actual) `shouldBe` "Unsatisfiable"
 
     it "Satisfiability and Validity" $ do
-        actual <- satWith z3Debug satisfiabilityAndValidity
+        actual <- sat satisfiabilityAndValidity
         (show actual) `shouldBe` "Unsatisfiable"
 
     it "Uninterpreted functions and constants" $ do
-        actual <- satWith z3Debug uninterpretedFunctionsAndConstants
+        actual <- sat uninterpretedFunctionsAndConstants
         (show actual)
             `shouldBe` "Satisfiable. Model:\n\
                        \  a = 21 :: Integer\n\
@@ -60,7 +60,7 @@ spec = do
                   , [i1, i2, i3, i4, 8, i6, i7, 7, 9]
                   ]
             mkBoard _ = error "puzzle0 needs exactly 81 elements!"
-        actual <- satWith z3Debug (sudoku (51, mkBoard))
+        actual <- sat (sudoku (51, mkBoard))
         (show actual)
             `shouldBe` "Satisfiable. Model:\n\
                        \  s0  = 4 :: Word8\n\
