@@ -32,19 +32,19 @@ spec = do
         actual <- allSat xkcd
         (show actual)
             `shouldBe` "Solution #1:\n\
-                       \  a = 1 :: Int8\n\
-                       \  b = 0 :: Int8\n\
-                       \  c = 0 :: Int8\n\
-                       \  d = 2 :: Int8\n\
-                       \  e = 0 :: Int8\n\
-                       \  f = 1 :: Int8\n\
+                       \  a = 1 :: Word16\n\
+                       \  b = 0 :: Word16\n\
+                       \  c = 0 :: Word16\n\
+                       \  d = 2 :: Word16\n\
+                       \  e = 0 :: Word16\n\
+                       \  f = 1 :: Word16\n\
                        \Solution #2:\n\
-                       \  a = 0 :: Int8\n\
-                       \  b = 1 :: Int8\n\
-                       \  c = 0 :: Int8\n\
-                       \  d = 2 :: Int8\n\
-                       \  e = 1 :: Int8\n\
-                       \  f = 0 :: Int8\n\
+                       \  a = 7 :: Word16\n\
+                       \  b = 0 :: Word16\n\
+                       \  c = 0 :: Word16\n\
+                       \  d = 0 :: Word16\n\
+                       \  e = 0 :: Word16\n\
+                       \  f = 0 :: Word16\n\
                        \Found 2 different solutions."
 
     it "sudoku" $ do

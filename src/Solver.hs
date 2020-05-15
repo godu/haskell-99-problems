@@ -129,22 +129,13 @@ linearOpt = do
 
 xkcd :: Goal
 xkcd = do
-  [a, b, c, d, e, f] <- sInt8s ["a", "b", "c", "d", "e", "f"]
+  [a, b, c, d, e, f] <- sWord16s ["a", "b", "c", "d", "e", "f"]
 
-  constrain $ foldl (.&&) sTrue $ (\x -> x .>= 0) <$> [a, b, c, d, e, f]
-
-  let [a_, b_, c_, d_, e_, f_] =
-        toSDouble sRoundTowardZero <$> [a, b, c, d, e, f]
+  constrain $ foldl (.&&) sTrue $ (.<= 10) <$> [a, b, c, d, e, f]
 
   constrain
-    $   ( (a_ * 2.15)
-        + (b_ * 2.75)
-        + (c_ * 3.35)
-        + (d_ * 3.55)
-        + (e_ * 5.20)
-        + (f_ * 5.80)
-        )
-    .== 15.05
+    $   1505
+    .== ((a * 215) + (b * 275) + (c * 335) + (d * 355) + (e * 420) + (f * 580))
 
 type Row = [SWord8]
 type Board = [Row]
