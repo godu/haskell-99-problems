@@ -47,6 +47,14 @@ spec = do
                        \  f = 0 :: Word16\n\
                        \Found 2 different solutions."
 
+    it "euler 9" $ do
+        actual <- sat euler
+        (show actual)
+            `shouldBe` "Satisfiable. Model:\n\
+                       \  a = 200 :: Integer\n\
+                       \  b = 375 :: Integer\n\
+                       \  c = 425 :: Integer"
+
     it "sudoku" $ do
         let mkBoard [         a3, a4,     a6, a7, a8, a9
                     ,     b2, b3,             b7, b8, b9
