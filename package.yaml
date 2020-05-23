@@ -28,6 +28,7 @@ executables:
       - -with-rtsopts=-N
     dependencies:
       - haskell-sandbox
+      - sbv
 tests:
   haskell-sandbox-test:
     main: Spec.hs
