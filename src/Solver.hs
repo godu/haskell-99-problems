@@ -39,6 +39,60 @@ uninterpretedFunctionsAndConstants = do
   constrain $ (b .> a)
   constrain $ (f 10) .== 1
 
+arithmeticReal :: Goal
+arithmeticReal = do
+  a <- sInteger "a"
+  b <- sInteger "b"
+  c <- sInteger "c"
+  d <- sReal "d"
+  e <- sReal "e"
+
+  constrain $ a .> (b + 2)
+  constrain $ a .== ((2 * c) + 10)
+  constrain $ (c + b) .<= 1000
+  constrain $ d .>= e
+
+arithmeticToReal :: Goal
+arithmeticToReal = do
+  a <- sInteger "a"
+  b <- sInteger "b"
+  c <- sInteger "c"
+  d <- sReal "d"
+  e <- sReal "e"
+
+  constrain $ e .> ((sFromIntegral (a + b)) + 2.0)
+  constrain $ d .== ((sFromIntegral c) + 0.5)
+  constrain $ a .> b
+
+nonlinearArithmeticSimple :: Goal
+nonlinearArithmeticSimple = do
+  a <- sInteger "a"
+
+  constrain $ (a * a) .> 3
+
+nonlinearArithmeticUnsatisfiable :: Goal
+nonlinearArithmeticUnsatisfiable = do
+  x <- sReal "x"
+  y <- sReal "y"
+  z <- sReal "z"
+
+  constrain $ (x * x) .== (x + 2.0)
+  constrain $ (x * y) .== x
+  constrain $ ((y - 1.0) * z) .== 1.0
+
+nonlinearArithmeticSatisfiable :: Goal
+nonlinearArithmeticSatisfiable = do
+  b <- sReal "b"
+  c <- sReal "c"
+
+  constrain $ (b * b * b) + (b * c) .== 3.0
+
+nonlinearArithmeticUnknown :: Goal
+nonlinearArithmeticUnknown = do
+  nonlinearArithmeticSimple
+  nonlinearArithmeticSatisfiable
+
+
 -- | Taken from <http://people.brunel.ac.uk/~mastjjb/jeb/or/morelp.html>
 --
 -- A company makes two products (X and Y) using two machines (A and B).

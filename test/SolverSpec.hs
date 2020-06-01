@@ -10,23 +10,66 @@ z3Debug = z3 { verbose = True }
 
 spec :: Spec
 spec = do
-    it "Propositional Logic" $ do
-        actual <- sat propositionalLogic
-        (show actual) `shouldBe` "Unsatisfiable"
+    describe "Z3 - Guide" $ do
+        it "Propositional Logic" $ do
+            actual <- sat propositionalLogic
+            (show actual) `shouldBe` "Unsatisfiable"
 
-    it "Satisfiability and Validity" $ do
-        actual <- sat satisfiabilityAndValidity
-        (show actual) `shouldBe` "Unsatisfiable"
+        it "Satisfiability and Validity" $ do
+            actual <- sat satisfiabilityAndValidity
+            (show actual) `shouldBe` "Unsatisfiable"
 
-    it "Uninterpreted functions and constants" $ do
-        actual <- sat uninterpretedFunctionsAndConstants
-        (show actual)
-            `shouldBe` "Satisfiable. Model:\n\
-                       \  a = 21 :: Integer\n\
-                       \  b = 22 :: Integer\n\
-                       \\n\
-                       \  f :: Integer -> Integer\n\
-                       \  f _ = 1"
+        it "Uninterpreted functions and constants" $ do
+            actual <- sat uninterpretedFunctionsAndConstants
+            (show actual)
+                `shouldBe` "Satisfiable. Model:\n\
+                           \  a = 21 :: Integer\n\
+                           \  b = 22 :: Integer\n\
+                           \\n\
+                           \  f :: Integer -> Integer\n\
+                           \  f _ = 1"
+        describe "Arithmetic" $ do
+            it "Real" $ do
+                actual <- sat arithmeticReal
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                               \  a =  10 :: Integer\n\
+                               \  b =   0 :: Integer\n\
+                               \  c =   0 :: Integer\n\
+                               \  d = 0.0 :: Real\n\
+                               \  e = 0.0 :: Real"
+            it "ToReal" $ do
+                actual <- sat arithmeticToReal
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                               \  a =   1 :: Integer\n\
+                               \  b =   0 :: Integer\n\
+                               \  c =   0 :: Integer\n\
+                               \  d = 0.5 :: Real\n\
+                               \  e = 4.0 :: Real"
+        describe "Nonlinear arithmetic" $ do
+            it "Simple" $ do
+                actual <- sat nonlinearArithmeticSimple
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                               \  a = -3 :: Integer"
+            it "Unknown" $ do
+                actual <- sat nonlinearArithmeticUnknown
+                (show actual)
+                    `shouldBe` "Unknown.\n\
+                               \  Reason: smt tactic failed to show goal to be sat/unsat (incomplete (theory arithmetic))"
+
+            it "Unsatisfiable" $ do
+                actual <- sat nonlinearArithmeticUnsatisfiable
+                (show actual) `shouldBe` "Unsatisfiable"
+
+            it "Satisfiable" $ do
+                actual <- sat nonlinearArithmeticSatisfiable
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                               \  b =     0.125 :: Real\n\
+                               \  c = 23.984375 :: Real"
+
 
     it "xkcd 287" $ do
         actual <- allSat xkcd
