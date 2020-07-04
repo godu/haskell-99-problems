@@ -83,6 +83,8 @@ arithmeticToReal = do
   constrain $ d .== ((sFromIntegral c) + 0.5)
   constrain $ a .> b
 
+-- Nonlinear arithmetic
+
 nonlinearArithmeticSimple :: Goal
 nonlinearArithmeticSimple = do
   a <- sInteger "a"
