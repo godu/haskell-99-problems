@@ -11,7 +11,9 @@ https://wiki.haskell.org/99_questions
 
 https://wiki.haskell.org/Peano_numbers
 
+## Theorem solver
 
+https://rise4fun.com/Z3/tutorial/
 
 
 ## VSCode
