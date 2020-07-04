@@ -1,7 +1,11 @@
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE DeriveAnyClass     #-}
+
 module Solver where
 
 import           Prelude
 import           Data.SBV
+import           Data.Generics
 
 -- https://rise4fun.com/z3/tutorial
 
@@ -38,6 +42,21 @@ uninterpretedFunctionsAndConstants = do
   constrain $ (a .> 20)
   constrain $ (b .> a)
   constrain $ (f 10) .== 1
+
+
+newtype A = A () deriving (Eq, Ord, Data, Read, Show, SymVal, HasKind)
+
+uninterpretedSorts :: Goal
+uninterpretedSorts = do
+  x <- free "x"
+  y <- free "y"
+  let f :: SBV A -> SBV A
+      f = uninterpret "f"
+  constrain $ (f (f x)) .== x
+  constrain $ (f x) .== y
+  constrain $ x ./= y
+
+-- Arithmetic
 
 arithmeticReal :: Goal
 arithmeticReal = do

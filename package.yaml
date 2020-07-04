@@ -18,6 +18,7 @@ library:
     - random
     - semirings
     - sbv
+    - syb
 executables:
   haskell-sandbox-exe:
     main: Main.hs

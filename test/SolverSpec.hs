@@ -28,6 +28,18 @@ spec = do
                            \\n\
                            \  f :: Integer -> Integer\n\
                            \  f _ = 1"
+
+        it "Uninterpreted sorts" $ do
+            actual <- sat uninterpretedSorts
+            (show actual)
+                `shouldBe` "Satisfiable. Model:\n\
+                          \  x = A!val!1 :: A\n\
+                          \  y = A!val!0 :: A\n\
+                          \\n\
+                          \  f :: A -> A\n\
+                          \  f A!val!0 = A!val!1\n\
+                          \  f _       = A!val!0"
+
         describe "Arithmetic" $ do
             it "Real" $ do
                 actual <- sat arithmeticReal
