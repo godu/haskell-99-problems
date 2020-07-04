@@ -19,26 +19,27 @@ spec = do
             actual <- sat satisfiabilityAndValidity
             (show actual) `shouldBe` "Unsatisfiable"
 
-        it "Uninterpreted functions and constants" $ do
-            actual <- sat uninterpretedFunctionsAndConstants
-            (show actual)
-                `shouldBe` "Satisfiable. Model:\n\
-                           \  a = 21 :: Integer\n\
-                           \  b = 22 :: Integer\n\
-                           \\n\
-                           \  f :: Integer -> Integer\n\
-                           \  f _ = 1"
+        describe "Uninterpreted" $ do
+            it "Functions and constants" $ do
+                actual <- sat uninterpretedFunctionsAndConstants
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                            \  a = 21 :: Integer\n\
+                            \  b = 22 :: Integer\n\
+                            \\n\
+                            \  f :: Integer -> Integer\n\
+                            \  f _ = 1"
 
-        it "Uninterpreted sorts" $ do
-            actual <- sat uninterpretedSorts
-            (show actual)
-                `shouldBe` "Satisfiable. Model:\n\
-                          \  x = A!val!1 :: A\n\
-                          \  y = A!val!0 :: A\n\
-                          \\n\
-                          \  f :: A -> A\n\
-                          \  f A!val!0 = A!val!1\n\
-                          \  f _       = A!val!0"
+            it "Sorts" $ do
+                actual <- sat uninterpretedSorts
+                (show actual)
+                    `shouldBe` "Satisfiable. Model:\n\
+                            \  x = A!val!1 :: A\n\
+                            \  y = A!val!0 :: A\n\
+                            \\n\
+                            \  f :: A -> A\n\
+                            \  f A!val!0 = A!val!1\n\
+                            \  f _       = A!val!0"
 
         describe "Arithmetic" $ do
             it "Real" $ do
@@ -59,29 +60,47 @@ spec = do
                                \  c =   0 :: Integer\n\
                                \  d = 0.5 :: Real\n\
                                \  e = 4.0 :: Real"
-        describe "Nonlinear arithmetic" $ do
-            it "Simple" $ do
-                actual <- sat nonlinearArithmeticSimple
-                (show actual)
-                    `shouldBe` "Satisfiable. Model:\n\
-                               \  a = -3 :: Integer"
-            it "Unknown" $ do
-                actual <- sat nonlinearArithmeticUnknown
-                (show actual)
-                    `shouldBe` "Unknown.\n\
-                               \  Reason: smt tactic failed to show goal to be sat/unsat (incomplete (theory arithmetic))"
 
-            it "Unsatisfiable" $ do
-                actual <- sat nonlinearArithmeticUnsatisfiable
-                (show actual) `shouldBe` "Unsatisfiable"
+            describe "Nonlinear arithmetic" $ do
+                it "Simple" $ do
+                    actual <- sat nonlinearArithmeticSimple
+                    (show actual)
+                        `shouldBe` "Satisfiable. Model:\n\
+                                \  a = -3 :: Integer"
+                it "Unknown" $ do
+                    actual <- sat nonlinearArithmeticUnknown
+                    (show actual)
+                        `shouldBe` "Unknown.\n\
+                                \  Reason: smt tactic failed to show goal to be sat/unsat (incomplete (theory arithmetic))"
 
-            it "Satisfiable" $ do
-                actual <- sat nonlinearArithmeticSatisfiable
-                (show actual)
-                    `shouldBe` "Satisfiable. Model:\n\
-                               \  b =     0.125 :: Real\n\
-                               \  c = 23.984375 :: Real"
+                it "Unsatisfiable" $ do
+                    actual <- sat nonlinearArithmeticUnsatisfiable
+                    (show actual) `shouldBe` "Unsatisfiable"
 
+                it "Satisfiable" $ do
+                    actual <- sat nonlinearArithmeticSatisfiable
+                    (show actual)
+                        `shouldBe` "Satisfiable. Model:\n\
+                                \  b =     0.125 :: Real\n\
+                                \  c = 23.984375 :: Real"
+
+            describe "Division" $ do
+                it "Division, module, remainder operators" $ do
+                    actual <- sat division
+                    (show actual)
+                        `shouldBe` "Satisfiable. Model:\n\
+                                   \  a  =     10 :: Integer\n\
+                                   \  r1 =      2 :: Integer\n\
+                                   \  r2 =      2 :: Integer\n\
+                                   \  r3 =      2 :: Integer\n\
+                                   \  r4 =     -3 :: Integer\n\
+                                   \  r5 =     -2 :: Integer\n\
+                                   \  r6 =      2 :: Integer\n\
+                                   \  b  = 20 % 3 :: Real\n\
+                                   \  c  =   20.0 :: Real"
+                it "By zero" $ do
+                    actual <- sat divisionByZero
+                    (show actual) `shouldBe` "Unsatisfiable"
 
     it "xkcd 287" $ do
         actual <- allSat xkcd

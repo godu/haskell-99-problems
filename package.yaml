@@ -17,8 +17,8 @@ library:
     - foldl
     - random
     - semirings
-    - sbv
     - syb
+    - sbv
 executables:
   haskell-sandbox-exe:
     main: Main.hs

@@ -113,6 +113,36 @@ nonlinearArithmeticUnknown = do
   nonlinearArithmeticSimple
   nonlinearArithmeticSatisfiable
 
+-- Division
+
+division :: Goal
+division = do
+  a  <- sInteger "a"
+  r1 <- sInteger "r1"
+  r2 <- sInteger "r2"
+  r3 <- sInteger "r3"
+  r4 <- sInteger "r4"
+  r5 <- sInteger "r5"
+  r6 <- sInteger "r6"
+
+  constrain $ a .== 10
+  constrain $ r1 .== (a `sDiv` 4)
+  constrain $ r2 .== (a `sMod` 4)
+  constrain $ r3 .== (a `sRem` 4)
+  constrain $ r4 .== (a `sDiv` (-4))
+  constrain $ r5 .== (a `sMod` (-4))
+  constrain $ r6 .== (a `sRem` (-4))
+
+  b <- sReal "b"
+  c <- sReal "c"
+
+  constrain $ b .>= (c / 3.0)
+  constrain $ c .>= 20.0
+
+divisionByZero :: Goal
+divisionByZero = do
+  a <- sReal "a"
+  constrain $ (a / 0) .== 10.0
 
 -- | Taken from <http://people.brunel.ac.uk/~mastjjb/jeb/or/morelp.html>
 --
