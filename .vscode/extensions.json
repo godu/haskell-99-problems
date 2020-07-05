@@ -1,5 +1,6 @@
 {
 	"recommendations": [
+		"maxgabriel.brittany",
 		"alanz.vscode-hie-server"
 	],
 	"unwantedRecommendations": []
