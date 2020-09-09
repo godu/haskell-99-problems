@@ -1,4 +1,3 @@
 {
-    "editor.formatOnSave": true,
-    "languageServerHaskell.hieVariant": "haskell-language-server"
+    "editor.formatOnSave": true
 }
