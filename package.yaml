@@ -19,6 +19,11 @@ library:
     - semirings
     - syb
     - sbv
+    - containers
+    - binary
+    - bytestring
+    - relude
+    - text
 executables:
   haskell-sandbox-exe:
     main: Main.hs
