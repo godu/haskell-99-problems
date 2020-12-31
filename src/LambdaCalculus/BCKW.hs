@@ -20,3 +20,6 @@ id = c k c
 
 t = b c c
 
+s = b (b (b w) c) (b b)
+
+bb = b b

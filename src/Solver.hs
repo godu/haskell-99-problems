@@ -248,8 +248,8 @@ euler = do
 
 type Board = [[SWord8]]
 
-
 type Puzzle = (Int, [SWord8] -> Board)
+
 sudoku :: Puzzle -> Goal
 sudoku (i, mkBoard) = do
   board <- mkBoard <$> mkExistVars i

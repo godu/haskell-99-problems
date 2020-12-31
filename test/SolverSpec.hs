@@ -66,12 +66,14 @@ spec = do
           actual <- sat nonlinearArithmeticSimple
           (show actual)
             `shouldBe` "Satisfiable. Model:\n\
-                       \  a = -3 :: Integer"
+                       \  a = -5 :: Integer"
         it "Unknown" $ do
           actual <- sat nonlinearArithmeticUnknown
           (show actual)
-            `shouldBe` "Unknown.\n\
-                       \  Reason: smt tactic failed to show goal to be sat/unsat (incomplete (theory arithmetic))"
+            `shouldBe` "Satisfiable. Model:\n\
+                       \  a =    -2 :: Integer\n\
+                       \  b =   1.5 :: Real\n\
+                       \  c = -0.25 :: Real"
 
         it "Unsatisfiable" $ do
           actual <- sat nonlinearArithmeticUnsatisfiable
@@ -105,19 +107,19 @@ spec = do
     actual <- allSat xkcd
     (show actual)
       `shouldBe` "Solution #1:\n\
-                 \  a = 1 :: Word16\n\
-                 \  b = 0 :: Word16\n\
-                 \  c = 0 :: Word16\n\
-                 \  d = 2 :: Word16\n\
-                 \  e = 0 :: Word16\n\
-                 \  f = 1 :: Word16\n\
-                 \Solution #2:\n\
                  \  a = 7 :: Word16\n\
                  \  b = 0 :: Word16\n\
                  \  c = 0 :: Word16\n\
                  \  d = 0 :: Word16\n\
                  \  e = 0 :: Word16\n\
                  \  f = 0 :: Word16\n\
+                 \Solution #2:\n\
+                 \  a = 1 :: Word16\n\
+                 \  b = 0 :: Word16\n\
+                 \  c = 0 :: Word16\n\
+                 \  d = 2 :: Word16\n\
+                 \  e = 0 :: Word16\n\
+                 \  f = 1 :: Word16\n\
                  \Found 2 different solutions."
 
   it "euler 9" $ do
