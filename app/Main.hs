@@ -1,5 +1,6 @@
 module Main where
 
+import qualified Data.Algebra as Algebra
 import Data.SBV
 import Solver
 
@@ -72,5 +73,6 @@ puzzle = (51, mkBoard)
 
 main :: IO ()
 main = do
+  Algebra.main
   actual <- sat (sudoku puzzle)
   print actual
