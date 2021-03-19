@@ -25,7 +25,7 @@ jobs:
           wget -O /usr/share/z3-4.8.9-x64-ubuntu-16.04.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.9/z3-4.8.9-x64-ubuntu-16.04.zip
           unzip /usr/share/z3-4.8.9-x64-ubuntu-16.04.zip -d /usr/share/
           rm /usr/share/z3-4.8.9-x64-ubuntu-16.04.zip
-          echo "::set-env name=PATH::/usr/share/z3-4.8.9-x64-ubuntu-16.04/bin:$PATH"
+          echo "/usr/share/z3-4.8.9-x64-ubuntu-16.04/bin" >> $GITHUB_PATH
       - name: Upgrade Stack 📡
         run: stack upgrade
       - name: Build ⚒

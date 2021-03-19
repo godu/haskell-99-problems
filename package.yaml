@@ -10,7 +10,7 @@ github: godu/haskell-sandbox
 extra-source-files:
   - README.md
 dependencies:
-  - base >= 4.7 && < 5
+  - base >= 4.11 && < 5
 library:
   source-dirs: src
   dependencies:
