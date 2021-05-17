@@ -1,6 +1,6 @@
 {
 	"recommendations": [
-		"haskell.haskell"
-	],
-	"unwantedRecommendations": []
+		"haskell.haskell",
+		"hoovercj.haskell-linter"
+	]
 }
