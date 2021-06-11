@@ -13,16 +13,16 @@ spec = do
   describe "Z3 - Guide" $ do
     it "Propositional Logic" $ do
       actual <- sat propositionalLogic
-      (show actual) `shouldBe` "Unsatisfiable"
+      show actual `shouldBe` "Unsatisfiable"
 
     it "Satisfiability and Validity" $ do
       actual <- sat satisfiabilityAndValidity
-      (show actual) `shouldBe` "Unsatisfiable"
+      show actual `shouldBe` "Unsatisfiable"
 
     describe "Uninterpreted" $ do
       it "Functions and constants" $ do
         actual <- sat uninterpretedFunctionsAndConstants
-        (show actual)
+        show actual
           `shouldBe` "Satisfiable. Model:\n\
                      \  a = 21 :: Integer\n\
                      \  b = 22 :: Integer\n\
@@ -32,7 +32,7 @@ spec = do
 
       it "Sorts" $ do
         actual <- sat uninterpretedSorts
-        (show actual)
+        show actual
           `shouldBe` "Satisfiable. Model:\n\
                      \  x = A!val!1 :: A\n\
                      \  y = A!val!0 :: A\n\
@@ -44,7 +44,7 @@ spec = do
     describe "Arithmetic" $ do
       it "Real" $ do
         actual <- sat arithmeticReal
-        (show actual)
+        show actual
           `shouldBe` "Satisfiable. Model:\n\
                      \  a =  10 :: Integer\n\
                      \  b =   0 :: Integer\n\
@@ -53,7 +53,7 @@ spec = do
                      \  e = 0.0 :: Real"
       it "ToReal" $ do
         actual <- sat arithmeticToReal
-        (show actual)
+        show actual
           `shouldBe` "Satisfiable. Model:\n\
                      \  a =   1 :: Integer\n\
                      \  b =   0 :: Integer\n\
@@ -64,24 +64,24 @@ spec = do
       describe "Nonlinear arithmetic" $ do
         it "Simple" $ do
           actual <- sat nonlinearArithmeticSimple
-          (show actual)
+          show actual
             `shouldBe` "Satisfiable. Model:\n\
                        \  a = -5 :: Integer"
         it "Unknown" $ do
           actual <- sat nonlinearArithmeticUnknown
-          (show actual)
+          show actual
             `shouldBe` "Satisfiable. Model:\n\
-                       \  a =    -2 :: Integer\n\
-                       \  b =   1.5 :: Real\n\
-                       \  c = -0.25 :: Real"
+                       \  a =           -2 :: Integer\n\
+                       \  b =         1.75 :: Real\n\
+                       \  c = (-151) % 112 :: Real"
 
         it "Unsatisfiable" $ do
           actual <- sat nonlinearArithmeticUnsatisfiable
-          (show actual) `shouldBe` "Unsatisfiable"
+          show actual `shouldBe` "Unsatisfiable"
 
         it "Satisfiable" $ do
           actual <- sat nonlinearArithmeticSatisfiable
-          (show actual)
+          show actual
             `shouldBe` "Satisfiable. Model:\n\
                        \  b =     0.125 :: Real\n\
                        \  c = 23.984375 :: Real"
@@ -89,7 +89,7 @@ spec = do
       describe "Division" $ do
         it "Division, module, remainder operators" $ do
           actual <- sat division
-          (show actual)
+          show actual
             `shouldBe` "Satisfiable. Model:\n\
                        \  a  =     10 :: Integer\n\
                        \  r1 =      2 :: Integer\n\
@@ -102,10 +102,10 @@ spec = do
                        \  c  =   20.0 :: Real"
         it "By zero" $ do
           actual <- sat divisionByZero
-          (show actual) `shouldBe` "Unsatisfiable"
+          show actual `shouldBe` "Unsatisfiable"
   it "xkcd 287" $ do
     actual <- allSat xkcd
-    (show actual)
+    show actual
       `shouldBe` "Solution #1:\n\
                  \  a = 7 :: Word16\n\
                  \  b = 0 :: Word16\n\
@@ -124,7 +124,7 @@ spec = do
 
   it "euler 9" $ do
     actual <- sat euler
-    (show actual)
+    show actual
       `shouldBe` "Satisfiable. Model:\n\
                  \  a = 200 :: Integer\n\
                  \  b = 375 :: Integer\n\
@@ -145,7 +145,7 @@ spec = do
         mkBoard _ = error "puzzle needs exactly 81 elements!"
         puzzle = (51, mkBoard)
     actual <- sat (sudoku puzzle)
-    (show actual)
+    show actual
       `shouldBe` "Satisfiable. Model:\n\
                  \  s0  = 4 :: Word8\n\
                  \  s1  = 6 :: Word8\n\
@@ -201,7 +201,7 @@ spec = do
 
   it "Production" $ do
     actual <- optimize Lexicographic production
-    (show actual)
+    show actual
       `shouldBe` "Optimal model:\n\
                  \  X     = 45 :: Integer\n\
                  \  Y     =  6 :: Integer\n\
@@ -209,7 +209,7 @@ spec = do
 
   it "LinearOpt" $ do
     actual <- optimize Lexicographic linearOpt
-    (show actual)
+    show actual
       `shouldBe` "Optimal model:\n\
                  \  x1   =  47 % 9 :: Real\n\
                  \  x2   =  20 % 9 :: Real\n\

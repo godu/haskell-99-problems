@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Solver where
 
@@ -27,7 +29,7 @@ satisfiabilityAndValidity = do
   a <- sBool "a"
   b <- sBool "b"
 
-  let demorgan = (a .&& b) .== (sNot ((sNot a) .|| (sNot b)))
+  let demorgan = (a .&& b) .== sNot (sNot a .|| sNot b)
   constrain $ sNot demorgan
 
 -- Uninterpreted functions and constants
@@ -39,11 +41,13 @@ uninterpretedFunctionsAndConstants = do
   a <- sInteger "a"
   b <- sInteger "b"
 
-  constrain $ (a .> 20)
-  constrain $ (b .> a)
-  constrain $ (f 10) .== 1
+  constrain (a .> 20)
+  constrain (b .> a)
+  constrain $ f 10 .== 1
 
-newtype A = A () deriving (Eq, Ord, Data, Read, Show, SymVal, HasKind)
+data A
+
+mkUninterpretedSort ''A
 
 uninterpretedSorts :: Goal
 uninterpretedSorts = do
@@ -51,8 +55,9 @@ uninterpretedSorts = do
   y <- free "y"
   let f :: SBV A -> SBV A
       f = uninterpret "f"
-  constrain $ (f (f x)) .== x
-  constrain $ (f x) .== y
+
+  constrain $ f (f x) .== x
+  constrain $ f x .== y
   constrain $ x ./= y
 
 -- Arithmetic
@@ -66,7 +71,7 @@ arithmeticReal = do
   e <- sReal "e"
 
   constrain $ a .> (b + 2)
-  constrain $ a .== ((2 * c) + 10)
+  constrain $ a .== (2 * c + 10)
   constrain $ (c + b) .<= 1000
   constrain $ d .>= e
 
@@ -78,8 +83,8 @@ arithmeticToReal = do
   d <- sReal "d"
   e <- sReal "e"
 
-  constrain $ e .> ((sFromIntegral (a + b)) + 2.0)
-  constrain $ d .== ((sFromIntegral c) + 0.5)
+  constrain $ e .> (sFromIntegral (a + b) + 2.0)
+  constrain $ d .== (sFromIntegral c + 0.5)
   constrain $ a .> b
 
 -- Nonlinear arithmetic
@@ -105,7 +110,7 @@ nonlinearArithmeticSatisfiable = do
   b <- sReal "b"
   c <- sReal "c"
 
-  constrain $ (b * b * b) + (b * c) .== 3.0
+  constrain $ b * b * b + (b * c) .== 3.0
 
 nonlinearArithmeticUnknown :: Goal
 nonlinearArithmeticUnknown = do
@@ -195,7 +200,7 @@ production = do
   constrain $ finalY .>= 95
 
   -- Policy: Maximize the final stock
-  maximize "stock" $ (finalX - 75) + (finalY - 95)
+  maximize "stock" $ finalX - 75 + (finalY - 95)
 
 toResult :: OptimizeResult -> Maybe SMTResult
 toResult (LexicographicResult result) = Just result
@@ -237,7 +242,7 @@ xkcd = do
 
   constrain $
     1505
-      .== ((a * 215) + (b * 275) + (c * 335) + (d * 355) + (e * 420) + (f * 580))
+      .== (a * 215 + b * 275 + c * 335 + d * 355 + e * 420 + f * 580)
 
 euler :: Goal
 euler = do
@@ -257,9 +262,9 @@ sudoku (i, mkBoard) = do
   constrain $
     sAnd $
       distinct
-        <$> (rows board)
-        <> (columns board)
-        <> (regions board)
+        <$> rows board
+        <> columns board
+        <> regions board
   where
     rows board = board
     columns [[a1, a2, a3, a4, a5, a6, a7, a8, a9], [b1, b2, b3, b4, b5, b6, b7, b8, b9], [c1, c2, c3, c4, c5, c6, c7, c8, c9], [d1, d2, d3, d4, d5, d6, d7, d8, d9], [e1, e2, e3, e4, e5, e6, e7, e8, e9], [f1, f2, f3, f4, f5, f6, f7, f8, f9], [g1, g2, g3, g4, g5, g6, g7, g8, g9], [h1, h2, h3, h4, h5, h6, h7, h8, h9], [i1, i2, i3, i4, i5, i6, i7, i8, i9]] =

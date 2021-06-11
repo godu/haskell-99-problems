@@ -1,5 +1,6 @@
-resolver: lts-17.6
+resolver: lts-17.15
 packages:
   - .
 extra-deps:
-  - sbv-8.7
+  - sbv-8.15
+  - libBF-0.6.2
