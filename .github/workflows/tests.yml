@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Checkout source 📡
@@ -22,10 +22,10 @@ jobs:
             ${{ runner.os }}-stack-
       - name: Install Z3 🧑‍🔬
         run: |
-          wget -O /usr/share/z3-4.8.10-x64-ubuntu-16.04.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.10/z3-4.8.10-x64-ubuntu-16.04.zip
-          unzip /usr/share/z3-4.8.10-x64-ubuntu-16.04.zip -d /usr/share/
-          rm /usr/share/z3-4.8.10-x64-ubuntu-16.04.zip
-          echo "/usr/share/z3-4.8.10-x64-ubuntu-16.04/bin" >> $GITHUB_PATH
+          wget -O /usr/share/z3-4.8.10-x64-ubuntu-18.04.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.10/z3-4.8.10-x64-ubuntu-18.04.zip
+          unzip /usr/share/z3-4.8.10-x64-ubuntu-18.04.zip -d /usr/share/
+          rm /usr/share/z3-4.8.10-x64-ubuntu-18.04.zip
+          echo "/usr/share/z3-4.8.10-x64-ubuntu-18.04/bin" >> $GITHUB_PATH
       - name: Upgrade Stack 📡
         run: stack upgrade
       - name: Build ⚒

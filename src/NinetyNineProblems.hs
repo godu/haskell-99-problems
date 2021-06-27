@@ -8,14 +8,17 @@ import System.Random
   )
 
 myLast :: [a] -> a
+myLast [] = error "Empty list"
 myLast [x] = x
 myLast (_ : xs) = myLast xs
 
 myButLast :: [a] -> a
+myButLast [] = error "Empty list"
 myButLast [x, _] = x
 myButLast (_ : xs) = myButLast xs
 
 elementAt :: [a] -> Int -> a
+elementAt [] _ = error "Empty list"
 elementAt (x : _) 1 = x
 elementAt (_ : xs) i = elementAt xs (i - 1)
 
@@ -24,7 +27,7 @@ myLength [] = 0
 myLength (_ : xs) = 1 + myLength xs
 
 myReverse :: [a] -> [a]
-myReverse [x] = [x]
+myReverse [] = []
 myReverse (x : xs) = myReverse xs ++ [x]
 
 isPalindrome :: Eq a => [a] -> Bool
@@ -86,6 +89,7 @@ dropEvery x c = dropEvery' x c 1
 
 split :: [a] -> Int -> ([a], [a])
 split xs 0 = ([], xs)
+split [] _ = ([], [])
 split (x : xs) i = let (l, r) = split xs (i - 1) in (x : l, r)
 
 slice :: [a] -> Int -> Int -> [a]
@@ -101,10 +105,12 @@ rotate xs i
   | otherwise = rotate (tail xs ++ [head xs]) (i - 1)
 
 removeAt :: Int -> [a] -> (a, [a])
+removeAt _ [] = error "Empty list"
 removeAt 1 (x : xs) = (x, xs)
 removeAt i (x : xs) = let (l, r) = removeAt (i - 1) xs in (l, x : r)
 
 insertAt :: a -> [a] -> Int -> [a]
+insertAt a [] _ = [a]
 insertAt a xs 1 = a : xs
 insertAt a (x : xs) i = x : insertAt a xs (i - 1)
 

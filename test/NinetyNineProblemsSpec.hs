@@ -118,13 +118,13 @@ spec = do
   it "Problem 22" $ range 4 9 `shouldBe` [4, 5, 6, 7, 8, 9]
   it "Problem 23" $
     fst (rndSelect "abcdefgh" 3 (mkStdGen 1676486720))
-      `shouldBe` "cad"
+      `shouldBe` "gef"
   it "Problem 24" $
     fst (diffSelect 6 49 (mkStdGen 1676486720))
-      `shouldBe` [3, 36, 42, 46, 43, 23]
+      `shouldBe` [23, 35, 33, 38, 38, 3]
   it "Problem 25" $
     fst (rndPermu "abcdef" (mkStdGen 1676486720))
-      `shouldBe` "edbfac"
+      `shouldBe` "efbdac"
   it "Problem 26" $
     combinations 3 "abcdef"
       `shouldBe` [ "abc",
