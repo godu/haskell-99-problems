@@ -4,7 +4,6 @@
 
 ## 99 Problems
 
-
 https://wiki.haskell.org/99_questions
 
 ## Peano
@@ -15,10 +14,21 @@ https://wiki.haskell.org/Peano_numbers
 
 https://rise4fun.com/Z3/tutorial/
 
+```shell
+$ stack run solver
+```
+
+## Molecular Dynamic Simulations
+
+https://mkdoku.github.io/posts/2021-06-19-molecular-dynamics.html
+
+```shell
+$ stack run cellular
+```
 
 ## VSCode
 
 ```shell
-$ stack install phoityne-vscode
-$ stack install hspec-discover
+$ stack install haskell-dap ghci-dap haskell-debug-adapter
+$ stack install hlint apply-refact ormolu
 ```
