@@ -1,5 +1,10 @@
+{-# LANGUAGE Strict #-}
+{-# LANGUAGE StrictData #-}
+
 module Main where
 
+import Data.List
+import Debug.Trace
 import Graphics.Gloss
 import Graphics.Gloss.Data.ViewPort
 import Linear
@@ -18,6 +23,7 @@ data Particle = Particle
     position :: Position,
     velocity :: Velocity
   }
+  deriving (Show)
 
 instance Eq Particle where
   a == b = index a == index b
@@ -49,12 +55,14 @@ latticeRow dim acc yPosition = V2 xPosition yPosition : latticeRow dim (acc - 1)
     xPosition = aLength / 2 - (fromIntegral acc * dx)
 
 modelRandom :: RandomGen g => Int -> g -> [Particle]
-modelRandom n g = zipWith3 Particle indexes positions velocities
+modelRandom n g = take n $ traceShowId $ nubBy isOverlapped $ zipWith3 Particle indexes positions velocities
   where
-    indexes = [1 .. n]
+    indexes = [1 ..]
     (g', g'') = split g
     positions = randomPos n g'
     velocities = randomVel n g''
+    isOverlapped (Particle _ (V2 x y) _) (Particle _ (V2 x' y') _) =
+      sqrt ((x' - x) ^ 2 + (y' - y) ^ 2) <= dotSize * 2
 
 randomVel :: RandomGen g => Int -> g -> [Velocity]
 randomVel n g = take n $ randomRs (-0.2, 0.2) g
