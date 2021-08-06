@@ -9,8 +9,10 @@ license: BSD3
 github: godu/haskell-sandbox
 extra-source-files:
   - README.md
+
 dependencies:
   - base >= 4.11 && < 5
+
 library:
   source-dirs: src
   dependencies:
@@ -24,6 +26,7 @@ library:
     - bytestring
     - relude
     - text
+
 executables:
   solver:
     main: Main.hs
@@ -48,6 +51,20 @@ executables:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
+  gameoflife:
+    main: Main.hs
+    source-dirs: app/GameOfLife
+    dependencies:
+      - linear
+      - not-gloss
+      - random
+      - containers
+    ghc-options:
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+
 tests:
   haskell-sandbox-test:
     main: Spec.hs

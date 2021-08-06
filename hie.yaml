@@ -8,3 +8,5 @@ cradle:
       component: "haskell-sandbox:exe:solver"
     - path: "./app/Cellular/Main.hs"
       component: "haskell-sandbox:exe:cellular"
+    - path: "./app/GameOfLife/Main.hs"
+      component: "haskell-sandbox:exe:gameoflife"
