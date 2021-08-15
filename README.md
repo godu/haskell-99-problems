@@ -36,6 +36,15 @@ https://github.com/mark-gerarts/nature-of-code-haskell/tree/master/src/Introduct
 $ stack run perlin
 ```
 
+## 3D Game Of Life
+
+![3D Game Of Life](./gameoflife.png)
+
+
+```shell
+$ stack run gameoflife
+```
+
 ## VSCode
 
 ```shell

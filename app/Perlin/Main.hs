@@ -42,7 +42,7 @@ main = simulate options frameRate initialWorld drawWorld updateWorld
           <$> quads
     updateWorld time _ =
       (\[x, y] -> quad x y)
-        <$> sequence [[0 .. width], [0 .. height]]
+        <$> sequence [[(- width) .. width], [(- height) .. height]]
       where
         perlinNoise = perlin (float2Int time) 5 0.05 0.5
         point x y = V3 x y $ (* amplitide) $ noiseValue perlinNoise (x, y, 0)

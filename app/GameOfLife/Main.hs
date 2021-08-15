@@ -31,7 +31,7 @@ main = simulate options frameRate initialWorld drawWorld updateWorld
   where
     options =
       ( defaultOpts
-          { optWindowName = "Perlin landscape",
+          { optWindowName = "Game Of Life - 3D",
             optBackgroundColor = Just white,
             optWindowSize = Just (800, 600)
           }
