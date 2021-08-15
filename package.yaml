@@ -79,6 +79,20 @@ executables:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
+  perlin:
+    main: Main.hs
+    source-dirs: app/Perlin
+    dependencies:
+      - linear
+      - not-gloss
+      - random
+      - containers
+      - hsnoise
+    ghc-options:
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
 
 tests:
   haskell-sandbox-test:

@@ -4,6 +4,7 @@ packages:
 extra-deps:
   - sbv-8.15
   - libBF-0.6.2
+  - hsnoise-0.0.2
 flags:
   gloss:
     GLFW: true

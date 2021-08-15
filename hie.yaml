@@ -1,12 +1,31 @@
 cradle:
   stack:
-    - path: "./test/"
-      component: "haskell-sandbox:test:haskell-sandbox-test"
-    - path: "./src/"
+    - path: "./src"
       component: "haskell-sandbox:lib"
-    - path: "./app/Solver/Main.hs"
-      component: "haskell-sandbox:exe:solver"
+
     - path: "./app/Cellular/Main.hs"
       component: "haskell-sandbox:exe:cellular"
+
+    - path: "./app/Cellular/Paths_haskell_sandbox.hs"
+      component: "haskell-sandbox:exe:cellular"
+
     - path: "./app/GameOfLife/Main.hs"
       component: "haskell-sandbox:exe:gameoflife"
+
+    - path: "./app/GameOfLife/Paths_haskell_sandbox.hs"
+      component: "haskell-sandbox:exe:gameoflife"
+
+    - path: "./app/Perlin/Main.hs"
+      component: "haskell-sandbox:exe:perlin"
+
+    - path: "./app/Perlin/Paths_haskell_sandbox.hs"
+      component: "haskell-sandbox:exe:perlin"
+
+    - path: "./app/Solver/Main.hs"
+      component: "haskell-sandbox:exe:solver"
+
+    - path: "./app/Solver/Paths_haskell_sandbox.hs"
+      component: "haskell-sandbox:exe:solver"
+
+    - path: "./test"
+      component: "haskell-sandbox:test:haskell-sandbox-test"

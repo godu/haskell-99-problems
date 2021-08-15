@@ -26,6 +26,16 @@ https://mkdoku.github.io/posts/2021-06-19-molecular-dynamics.html
 $ stack run cellular
 ```
 
+## Perlin noise
+
+![perlin noise](./perlin.png)
+
+https://github.com/mark-gerarts/nature-of-code-haskell/tree/master/src/Introduction/AnimatedPerlinNoise2D
+
+```shell
+$ stack run perlin
+```
+
 ## VSCode
 
 ```shell
