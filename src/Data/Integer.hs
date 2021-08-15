@@ -15,22 +15,16 @@ import Data.Semiring
     (+),
   )
 import Prelude
-  ( Bool (..),
-    Bounded,
-    Eq,
+  ( Eq,
     Int,
-    Monoid,
     Ord,
-    Semigroup,
     Show,
     otherwise,
     show,
-    ($),
     (-),
     (.),
     (<=),
     (==),
-    (>),
   )
 
 data Integer

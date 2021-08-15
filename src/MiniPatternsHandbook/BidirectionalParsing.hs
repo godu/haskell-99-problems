@@ -2,7 +2,6 @@
 
 module MiniPatternsHandbook.BidirectionalParsing where
 
-import qualified Data.Map as M
 import Relude.Extra.Enum (inverseMap)
 
 data Colour

@@ -10,7 +10,6 @@ import Graham.Lecture6
   )
 import Test.Hspec
   ( Spec,
-    hspec,
     it,
     shouldBe,
   )

@@ -5,6 +5,7 @@ import Data.Integer
     fromInt,
   )
 import Data.Proxy (Proxy (..))
+import Data.Semiring (Ring, Semiring, fromNatural, negate, one, plus, times, zero)
 import Test.Hspec (Spec)
 import Test.QuickCheck.Arbitrary
   ( Arbitrary,
@@ -18,16 +19,28 @@ import Test.QuickCheck.Classes
   )
 import Test.QuickCheck.Gen (choose)
 import Test.Utils (forAllLaws)
-import Prelude ((<$>))
+import Prelude (Eq, Ord, Show, (.), (<$>))
 
-instance Arbitrary Integer where
-  arbitrary = fromInt <$> choose (-10, 10)
+newtype Bar = Bar Integer deriving (Eq, Ord, Show)
+
+instance Semiring Bar where
+  zero = Bar zero
+  one = Bar one
+  fromNatural = Bar . fromNatural
+  (Bar a) `plus` (Bar b) = Bar (a `plus` b)
+  (Bar a) `times` (Bar b) = Bar (a `times` b)
+
+instance Ring Bar where
+  negate (Bar a) = (Bar . negate) a
+
+instance Arbitrary Bar where
+  arbitrary = Bar . fromInt <$> choose (-10, 10)
 
 spec :: Spec
 spec =
   forAllLaws
-    [ eqLaws (Proxy :: Proxy Integer),
-      semiringLaws (Proxy :: Proxy Integer),
-      ringLaws (Proxy :: Proxy Integer),
-      ordLaws (Proxy :: Proxy Integer)
+    [ eqLaws (Proxy :: Proxy Bar),
+      semiringLaws (Proxy :: Proxy Bar),
+      ringLaws (Proxy :: Proxy Bar),
+      ordLaws (Proxy :: Proxy Bar)
     ]

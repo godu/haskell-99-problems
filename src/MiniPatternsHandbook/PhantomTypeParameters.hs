@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 module MiniPatternsHandbook.PhantomTypeParameters where
 
 import Data.Binary (Binary)

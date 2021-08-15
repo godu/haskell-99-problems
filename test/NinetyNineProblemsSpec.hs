@@ -14,7 +14,6 @@ import NinetyNineProblems
     encodeDirect,
     encodeModified,
     flatten,
-    groupTogether,
     insertAt,
     isPalindrome,
     myButLast,
@@ -34,10 +33,8 @@ import NinetyNineProblems
 import System.Random (mkStdGen)
 import Test.Hspec
   ( Spec,
-    hspec,
     it,
     shouldBe,
-    shouldReturn,
   )
 
 spec :: Spec

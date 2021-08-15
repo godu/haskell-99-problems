@@ -9,12 +9,9 @@ import Data.Semiring
   )
 import Prelude
   ( Bool (..),
-    Bounded,
     Eq,
     Int,
-    Monoid,
     Ord (..),
-    Semigroup,
     Show (..),
     ($),
     (-),

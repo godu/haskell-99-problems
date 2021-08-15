@@ -1,6 +1,5 @@
 module MiniPatternsHandbook.MonadFailSugar where
 
-import Data.Maybe (Maybe (Nothing), fromMaybe)
 import Text.Read (readMaybe)
 
 sumThree :: String -> Maybe Int

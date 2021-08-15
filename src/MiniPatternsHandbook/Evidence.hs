@@ -2,7 +2,6 @@ module MiniPatternsHandbook.Evidence where
 
 import Control.Applicative (liftA2)
 import Data.IntMap (IntMap)
-import Data.Maybe (catMaybes, fromJust, fromMaybe)
 import qualified Data.IntMap as IntMap
 
 add :: (a -> Maybe Int) -> (a -> Maybe Int) -> a -> Maybe Int

@@ -3,12 +3,35 @@
 
 module Main where
 
-import Data.List
-import Debug.Trace
+import Data.List (nubBy)
+import Debug.Trace (traceShowId)
 import Graphics.Gloss
-import Graphics.Gloss.Data.ViewPort
+  ( Display (InWindow),
+    Picture (Color),
+    blue,
+    circleSolid,
+    lineLoop,
+    pictures,
+    rectanglePath,
+    simulate,
+    translate,
+    white,
+    withAlpha,
+  )
+import Graphics.Gloss.Data.ViewPort (ViewPort)
 import Linear
+  ( Additive ((^+^), (^-^)),
+    Metric (norm),
+    V2 (..),
+    (*^),
+    (^*),
+    (^/),
+  )
 import System.Random
+  ( Random (randomR, randomRs),
+    RandomGen (split),
+    newStdGen,
+  )
 
 type Position = V2 Float
 

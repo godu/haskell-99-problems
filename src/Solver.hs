@@ -5,7 +5,6 @@
 
 module Solver where
 
-import Data.Generics
 import Data.SBV
 import Prelude
 
