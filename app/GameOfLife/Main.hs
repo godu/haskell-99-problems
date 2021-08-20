@@ -1,13 +1,16 @@
 {-# LANGUAGE FlexibleContexts #-}
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 
 module Main where
 
+import Data.Bifunctor (first)
 import Data.Ix (inRange)
 import qualified Data.List
-import Data.Set (Set, filter, fromList, member, toList)
+import Data.Set (Set, empty, filter, fromList, insert, member, toList)
 import GHC.Float (int2Double)
 import Linear (V3 (V3))
+import System.Random (Random (random), RandomGen, getStdGen)
 import Vis
   ( Flavour (Solid),
     Options (optBackgroundColor, optWindowName, optWindowSize),
@@ -27,7 +30,11 @@ rules :: (Int, Int, Int, Int)
 rules = (4, 5, 5, 5)
 
 main :: IO ()
-main = simulate options frameRate initialWorld drawWorld updateWorld
+main =
+  do
+    g <- getStdGen
+    let (initialWorld, _) = randomWorld ((-40, 40), (-40, 40), (-40, 40)) g
+    simulate options frameRate initialWorld drawWorld updateWorld
   where
     options =
       ( defaultOpts
@@ -37,20 +44,20 @@ main = simulate options frameRate initialWorld drawWorld updateWorld
           }
       )
     frameRate = 1 / 2
-    initialWorld =
-      World $
-        fromList
-          [ V3 1 0 0,
-            V3 1 1 0,
-            V3 0 2 0,
-            V3 (-1) 2 0,
-            V3 (-2) 0 0,
-            V3 (-2) 1 0,
-            V3 0 0 1,
-            V3 0 1 1,
-            V3 (-1) 0 1,
-            V3 (-1) 1 1
-          ]
+    -- initialWorld =
+    --   World $
+    --     fromList
+    --       [ V3 1 0 0,
+    --         V3 1 1 0,
+    --         V3 0 2 0,
+    --         V3 (-1) 2 0,
+    --         V3 (-2) 0 0,
+    --         V3 (-2) 1 0,
+    --         V3 0 0 1,
+    --         V3 0 1 1,
+    --         V3 (-1) 0 1,
+    --         V3 (-1) 1 1
+    --       ]
     drawWorld (World cells) = VisObjects $ createSphere <$> toList cells
       where
         createSphere position =
@@ -58,6 +65,22 @@ main = simulate options frameRate initialWorld drawWorld updateWorld
             Sphere 0.5 Solid blue
 
     updateWorld _ (World cells) = World $ generation cells
+
+randomWorld :: RandomGen g => ((Int, Int), (Int, Int), (Int, Int)) -> g -> (World, g)
+randomWorld ((x, x'), (y, y'), (z, z')) g =
+  first World $
+    foldr
+      go
+      (empty, g)
+      $ sequence
+        [ [x .. x'],
+          [y .. y'],
+          [z .. z']
+        ]
+  where
+    go [x, y, z] (ax, g) = (if b then V3 x y z `insert` ax else ax, g')
+      where
+        (b, g') = random g
 
 range :: Enum a => V3 a -> V3 a -> [V3 a]
 range (V3 x y z) (V3 x' y' z') =
