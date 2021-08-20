@@ -41,6 +41,10 @@ library:
     - bytestring
     - relude
     - text
+    - aeson
+    - hashable
+    - transformers
+    - mtl
 
 executables:
   solver:
