@@ -1,9 +1,7 @@
-resolver: lts-18.0
+resolver: lts-18.21
 packages:
   - .
 extra-deps:
-  - sbv-8.15
-  - libBF-0.6.2
   - hsnoise-0.0.2
 flags:
   gloss:

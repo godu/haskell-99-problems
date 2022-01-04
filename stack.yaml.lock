@@ -5,20 +5,6 @@
 
 packages:
 - completed:
-    hackage: sbv-8.15@sha256:bc0ea4e3564626030ac2cb21905b97cd9bd25fddcd6d6010834e8cc2ebf79067,29016
-    pantry-tree:
-      size: 63924
-      sha256: 9b71ca2696ef73cac9246696d64f5b3d46c5b0443eca48e7a888fb738d00db3a
-  original:
-    hackage: sbv-8.15
-- completed:
-    hackage: libBF-0.6.2@sha256:7bffc0e4dbc9bd9e851ba5c29255b62fd2c288dbc9a401cd3761b740f013775e,1770
-    pantry-tree:
-      size: 760
-      sha256: ca11e64003b53b2586cf0015038587e1dc85f96aed22cce7480ff76568402370
-  original:
-    hackage: libBF-0.6.2
-- completed:
     hackage: hsnoise-0.0.2@sha256:ebde231014d8c1f4c44e9760742824af87645cdff1f223c2efe16d79bc418587,1306
     pantry-tree:
       size: 535
@@ -27,7 +13,7 @@ packages:
     hackage: hsnoise-0.0.2
 snapshots:
 - completed:
-    size: 585393
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/0.yaml
-    sha256: c632012da648385b9fa3c29f4e0afd56ead299f1c5528ee789058be410e883c0
-  original: lts-18.0
+    size: 586110
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/21.yaml
+    sha256: ce4fb8d44f3c6c6032060a02e0ebb1bd29937c9a70101c1517b92a87d9515160
+  original: lts-18.21

@@ -34,8 +34,8 @@ spec = do
         actual <- sat uninterpretedSorts
         show actual
           `shouldBe` "Satisfiable. Model:\n\
-                     \  x = A!val!1 :: A\n\
-                     \  y = A!val!0 :: A\n\
+                     \  x = A!val!0 :: A\n\
+                     \  y = A!val!1 :: A\n\
                      \\n\
                      \  f :: A -> A\n\
                      \  f A!val!0 = A!val!1\n\
@@ -72,8 +72,8 @@ spec = do
           show actual
             `shouldBe` "Satisfiable. Model:\n\
                        \  a =           -2 :: Integer\n\
-                       \  b =         1.75 :: Real\n\
-                       \  c = (-151) % 112 :: Real"
+                       \  b =        1.625 :: Real\n\
+                       \  c = (-661) % 832 :: Real"
 
         it "Unsatisfiable" $ do
           actual <- sat nonlinearArithmeticUnsatisfiable
@@ -107,19 +107,19 @@ spec = do
     actual <- allSat xkcd
     show actual
       `shouldBe` "Solution #1:\n\
-                 \  a = 7 :: Word16\n\
-                 \  b = 0 :: Word16\n\
-                 \  c = 0 :: Word16\n\
-                 \  d = 0 :: Word16\n\
-                 \  e = 0 :: Word16\n\
-                 \  f = 0 :: Word16\n\
-                 \Solution #2:\n\
                  \  a = 1 :: Word16\n\
                  \  b = 0 :: Word16\n\
                  \  c = 0 :: Word16\n\
                  \  d = 2 :: Word16\n\
                  \  e = 0 :: Word16\n\
                  \  f = 1 :: Word16\n\
+                 \Solution #2:\n\
+                 \  a = 7 :: Word16\n\
+                 \  b = 0 :: Word16\n\
+                 \  c = 0 :: Word16\n\
+                 \  d = 0 :: Word16\n\
+                 \  e = 0 :: Word16\n\
+                 \  f = 0 :: Word16\n\
                  \Found 2 different solutions."
 
   it "euler 9" $ do
