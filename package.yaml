@@ -31,72 +31,7 @@ ghc-options:
 library:
   source-dirs: src
   dependencies:
-    - foldl
     - random
-    - semirings
-    - syb
-    - sbv
-    - containers
-    - binary
-    - bytestring
-    - relude
-    - text
-    - aeson
-    - hashable
-    - transformers
-    - mtl
-
-executables:
-  solver:
-    main: Main.hs
-    source-dirs: app/Solver
-    dependencies:
-      - haskell-sandbox
-      - sbv
-    ghc-options:
-      - -O2
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-  cellular:
-    main: Main.hs
-    source-dirs: app/Cellular
-    dependencies:
-      - linear
-      - gloss
-      - random
-    ghc-options:
-      - -O2
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-  gameoflife:
-    main: Main.hs
-    source-dirs: app/GameOfLife
-    dependencies:
-      - linear
-      - not-gloss
-      - random
-      - containers
-    ghc-options:
-      - -O2
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-  perlin:
-    main: Main.hs
-    source-dirs: app/Perlin
-    dependencies:
-      - linear
-      - not-gloss
-      - random
-      - containers
-      - hsnoise
-    ghc-options:
-      - -O2
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
 
 tests:
   haskell-sandbox-test:
@@ -105,9 +40,4 @@ tests:
     dependencies:
       - haskell-sandbox
       - hspec
-      - QuickCheck
-      - quickcheck-classes
       - random
-      - sbv
-      - semirings
-      - comonad

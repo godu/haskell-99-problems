@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout source 📡
@@ -20,15 +20,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml.lock') }}-
             ${{ runner.os }}-stack-
-      - name: Install Glut & GLFW 👨🏻‍🎨
-        run: sudo apt-get install freeglut3-dev libglfw3-dev libxi-dev libxrandr-dev libxinerama-dev libxcursor-dev libxxf86vm-dev
-      - name: Install Z3 🧑‍🔬
-        run: |
-          sudo apt-get install libc6 libgcc-s1 libstdc++6
-          wget -O /usr/share/z3-4.11.2-x64-glibc-2.31.zip https://github.com/Z3Prover/z3/releases/download/z3-4.11.2/z3-4.11.2-x64-glibc-2.31.zip
-          unzip /usr/share/z3-4.11.2-x64-glibc-2.31.zip -d /usr/share/
-          rm /usr/share/z3-4.11.2-x64-glibc-2.31.zip
-          echo "/usr/share/z3-4.11.2-x64-glibc-2.31/bin" >> $GITHUB_PATH
       - name: Upgrade Stack 📡
         run: stack upgrade
       - name: Build ⚒
