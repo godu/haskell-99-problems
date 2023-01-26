@@ -25,10 +25,10 @@ jobs:
       - name: Install Z3 🧑‍🔬
         run: |
           sudo apt-get install libc6 libgcc-s1 libstdc++6
-          wget -O /usr/share/z3-4.8.14-x64-glibc-2.31.zip https://github.com/Z3Prover/z3/releases/download/z3-4.8.14/z3-4.8.14-x64-glibc-2.31.zip
-          unzip /usr/share/z3-4.8.14-x64-glibc-2.31.zip -d /usr/share/
-          rm /usr/share/z3-4.8.14-x64-glibc-2.31.zip
-          echo "/usr/share/z3-4.8.14-x64-glibc-2.31/bin" >> $GITHUB_PATH
+          wget -O /usr/share/z3-4.11.2-x64-glibc-2.31.zip https://github.com/Z3Prover/z3/releases/download/z3-4.11.2/z3-4.11.2-x64-glibc-2.31.zip
+          unzip /usr/share/z3-4.11.2-x64-glibc-2.31.zip -d /usr/share/
+          rm /usr/share/z3-4.11.2-x64-glibc-2.31.zip
+          echo "/usr/share/z3-4.11.2-x64-glibc-2.31/bin" >> $GITHUB_PATH
       - name: Upgrade Stack 📡
         run: stack upgrade
       - name: Build ⚒
