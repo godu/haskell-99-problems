@@ -41,3 +41,4 @@ tests:
       - haskell-sandbox
       - hspec
       - random
+      - containers
