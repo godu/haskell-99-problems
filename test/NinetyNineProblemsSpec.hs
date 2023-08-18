@@ -1,35 +1,6 @@
 module NinetyNineProblemsSpec where
 
 import NinetyNineProblems
-  ( ListItem (Multiple, Single),
-    NestedList (Elem, List),
-    combinations,
-    compress,
-    decodeModified,
-    diffSelect,
-    dropEvery,
-    dupli,
-    elementAt,
-    encode,
-    encodeDirect,
-    encodeModified,
-    flatten,
-    insertAt,
-    isPalindrome,
-    myButLast,
-    myLast,
-    myLength,
-    myReverse,
-    pack,
-    range,
-    removeAt,
-    repli,
-    rndPermu,
-    rndSelect,
-    rotate,
-    slice,
-    split,
-  )
 import System.Random (mkStdGen)
 import Test.Hspec
   ( Spec,
@@ -246,20 +217,22 @@ spec = do
                    "fed"
                  ]
 
--- it "Problem 27" $ do
---   groupTogether
---     [2, 3, 4]
---     ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"] `shouldBe`
---     [ [ ["aldo", "beat"]
---       , ["carla", "david", "evi"]
---       , ["flip", "gary", "hugo", "ida"]
---       ]
---     ]
---   groupTogether
---     [2, 2, 5]
---     ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"] `shouldBe`
---     [ [ ["aldo", "beat"]
---       , ["carla", "david"]
---       , ["evi", "flip", "gary", "hugo", "ida"]
---       ]
---     ]
+  it "Problem 27" $ do
+    length
+      ( groupTogether
+          [2, 3, 4]
+          ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]
+      )
+      `shouldBe` 1260
+    length
+      ( groupTogether
+          [2, 2, 5]
+          ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]
+      )
+      `shouldBe` 756
+
+  it "Problem 28" $ do
+    lsort ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
+      `shouldBe` ["o", "de", "de", "mn", "abc", "fgh", "ijkl"]
+    lfsort ["abc", "de", "fgh", "de", "ijkl", "mn", "o"]
+      `shouldBe` ["ijkl", "o", "abc", "fgh", "de", "de", "mn"]

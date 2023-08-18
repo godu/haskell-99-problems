@@ -2,8 +2,8 @@
 
 module ExercismSpec where
 
-import qualified Data.Char as Char (toLower)
-import qualified Data.Set as Set (Set, delete, fromList, null)
+import Data.Char as Char (toLower)
+import Data.Set as Set (Set, delete, fromList, null)
 import Test.Hspec
   ( Spec,
     it,

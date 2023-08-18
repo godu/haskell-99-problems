@@ -2,6 +2,5 @@ cradle:
   stack:
     - path: "./src"
       component: "haskell-sandbox:lib"
-
     - path: "./test"
       component: "haskell-sandbox:test:haskell-sandbox-test"

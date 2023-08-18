@@ -1,3 +1,20 @@
 {
-    "editor.formatOnSave": true
-}
+    "editor.formatOnSave": true,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.quickSuggestions":
+    {
+      "comments": "inline",
+      "other": "inline",
+      "strings":  "inline"
+    },
+    "editor.quickSuggestionsDelay": 2000,
+    "editor.snippetSuggestions": "none",
+    "editor.suggest.filterGraceful": false,
+    "editor.suggest.preview": true,
+    "editor.suggest.showStatusBar": true,
+    "editor.suggest.showWords": true,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.suggestSelection": "first",
+    "editor.wordBasedSuggestionsMode": "matchingDocuments"
+  }

@@ -1,6 +1,9 @@
+{-# LANGUAGE TupleSections #-}
+
 module NinetyNineProblems where
 
-import Data.List (group)
+import Data.List (group, sortOn)
+import Data.Map as Map (fromListWith, (!))
 import Data.Tuple (swap)
 import System.Random
   ( RandomGen,
@@ -149,13 +152,6 @@ combinations i xs = concatMap (combine . (`removeAt` xs)) indexes
     combine :: (a, [a]) -> [[a]]
     combine (r, s) = map ((:) r) $ combinations (i - 1) s
 
--- groupTogether :: [Int] -> [a] -> [[[a]]]
--- groupTogether gs xs = [combinations (sum gs) xs]
---   where
---     groupTogether' [] _ = []
---     groupTogether' (g:gs) xs =
---       let (l, r) = split xs g
---        in [l] -- groupTogether' gs r
 combination :: Int -> [a] -> [([a], [a])]
 combination 0 xs = [([], xs)]
 combination n [] = []
@@ -168,3 +164,11 @@ groupTogether :: [Int] -> [a] -> [[[a]]]
 groupTogether [] _ = [[]]
 groupTogether (n : ns) xs =
   [g : gs | (g, rs) <- combination n xs, gs <- groupTogether ns rs]
+
+lsort :: [[a]] -> [[a]]
+lsort = sortOn length
+
+lfsort :: [[a]] -> [[a]]
+lfsort xs = sortOn ((frequencies Map.!) . length) xs
+  where
+    frequencies = Map.fromListWith (+) $ map ((,1) . length) xs
